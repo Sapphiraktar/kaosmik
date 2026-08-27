@@ -1,0 +1,22 @@
+{
+  "animal": {
+    "title": "Animal",
+    "url": "/animal",
+    "icon": "<i class=\"fa-solid fa-paw\"></i>",
+    "class": ""
+  },
+
+  "employe": {
+    "title": "Employé",
+    "url": "/employe",
+    "icon": "<i class=\"fa-solid fa-user\"></i>",
+    "class": ""
+  },
+
+  "zone": {
+    "title": "Zone",
+    "url": "/zone",
+    "icon": "<i class=\"fa-solid fa-location-dot\"></i>",
+    "class": ""
+  }
+}
