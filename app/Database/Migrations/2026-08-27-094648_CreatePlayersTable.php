@@ -15,7 +15,7 @@ class CreatePlayersTable extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'user_id'=> [
+            'user_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
@@ -24,31 +24,31 @@ class CreatePlayersTable extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-                'default'=> 1
+                'default' => 1
             ],
             'experience' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-                'default'=> 0
+                'default' => 0
             ],
-            'credits' =>[
+            'credits' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-                'default'=> 1000
+                'default' => 1000
             ],
-            'fusion_energy' =>[
+            'fusion_energy' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-                'default'=> 0
+                'default' => 0
             ],
-            'fleet_capacity' =>[
+            'fleet_capacity' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-                'default'=> 10
+                'default' => 10
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -64,12 +64,12 @@ class CreatePlayersTable extends Migration
             ]
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('user_id','users','id','CASCADE','CASCADE');
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('players');
     }
 
     public function down()
     {
-      $this->forge->dropTable('players');
+        $this->forge->dropTable('players');
     }
 }

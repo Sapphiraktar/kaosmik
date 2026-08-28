@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Shield\Entities\User;
+use App\Models\UserModel;
 
 class Player extends Entity
 {
