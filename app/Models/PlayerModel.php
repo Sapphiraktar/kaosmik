@@ -7,13 +7,13 @@ use CodeIgniter\Model;
 
 class PlayerModel extends Model
 {
-    protected $table = 'players';
-    protected $primaryKey = 'id';
+    protected $table            = 'players';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType = Player::class;
-    protected $useSoftDeletes = true;
-    protected $protectFields = true;
-    protected $allowedFields = [
+    protected $returnType       = Player::class;
+    protected $useSoftDeletes   = true;
+    protected $protectFields    = true;
+    protected $allowedFields    = [
         'user_id',
         'level',
         'experience',
@@ -22,13 +22,12 @@ class PlayerModel extends Model
         'fleet_capacity',
     ];
 
-
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat = 'datetime';
-    protected $createdField = 'created_at';
-    protected $updatedField = 'updated_at';
-    protected $deletedField = 'deleted_at';
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     public function findByUserId(int $userId)
     {
