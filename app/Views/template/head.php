@@ -9,7 +9,14 @@
     <meta name="author" content="<?= $author ?? "" ?>" >
     <meta name="keyword" content="<?= $keyword ?? "" ?>" >
 
-    <!-- TODO: FAVICON -->
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="<?= base_url("/assets/img/favicon/favicon-96x96.png"); ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= base_url("/assets/img/favicon/favicon.svg"); ?>" />
+    <link rel="shortcut icon" href="<?= base_url("/assets/img/favicon/favicon.ico"); ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url("/assets/img/favicon/apple-touch-icon.png"); ?>" />
+    <meta name="apple-mobile-web-app-title" content="KaosmiK" />
+    <link rel="manifest" href="<?= base_url("/assets/img/favicon/site.webmanifest"); ?>" />
+
     <!-- BOOTSTRAP TABLE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/bootstrap-table.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/bootstrap-table.min.js"></script>
