@@ -4,5 +4,11 @@
     "url" : "/admin/user",
     "icon" : "<i class=\"fa-solid fa-users\"></i>",
     "class": ""
-    }
+  },
+  "progression" : {
+    "title" : "Courbe des niveaux",
+    "url" : "/level",
+    "icon" : "<i class=\"fa-solid fa-atom\"></i>",
+    "class": ""
   }
+}
