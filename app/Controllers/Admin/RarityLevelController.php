@@ -75,7 +75,6 @@ class RarityLevelController extends BaseController
         } else {
             $this->error('Une erreur est survenue lors de la modification de la rareté.');
         }
-
         return $this->redirect('/admin/rarity-level');
     }
 
@@ -100,7 +99,6 @@ class RarityLevelController extends BaseController
         } else {
             $this->error('Erreur lors de la suppression de la rareté.');
         }
-
         return $this->redirect('/admin/rarity-level');
     }
 }
