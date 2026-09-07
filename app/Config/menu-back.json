@@ -5,10 +5,16 @@
     "icon" : "<i class=\"fa-solid fa-users\"></i>",
     "class": ""
   },
-  "progression" : {
+  "level_threshold" : {
     "title" : "Courbe des niveaux",
-    "url" : "/level",
-    "icon" : "<i class=\"fa-solid fa-atom\"></i>",
+    "url" : "/admin/level-threshold",
+    "icon" : "<i class=\"fa-solid fa-gear\"></i>",
+    "class": ""
+  },
+  "rarity_level": {
+    "title": "Niveaux de rareté",
+    "url": "/admin/rarity-level",
+    "icon": "<i class=\"fa-solid fa-gem\"></i>",
     "class": ""
   }
 }

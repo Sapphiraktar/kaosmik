@@ -57,10 +57,8 @@ abstract class BaseController extends Controller
         }
     }
 
-    public function render($view = null, $datas = [], $options = [])
-    {
+    public function render($view = null, $datas = [], $options = []) {
         $flashData = session()->getFlashdata('data');
-
         if ($flashData) {
             $datas = array_merge($datas, $flashData);
         }
@@ -77,10 +75,9 @@ abstract class BaseController extends Controller
         ];
 
         return view('template/head', $headData)
-            . view($view, $datas, $options)
-            . view('template/footer', ['messages' => $this->messages]);
+            .view($view, $datas,$options)
+            .view('template/footer', ['messages' => $this->messages]);
     }
-
 
     protected function loadMenu() {
         $filename = APPPATH . "Config";

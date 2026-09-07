@@ -32,7 +32,7 @@
                             <td><?= $user->username; ?></td>
                             <td><?= $user->active ? "<i class='text-success fa-solid fa-check'>" : "<i class='text-danger fa-solid fa-x'>"; ?></td>
                             <td><?= implode(', ', $user->getGroups()) ?></td>
-                            <td><?= $user->getPlayer()->level; ?></td>
+                            <td><?= $user->getPlayer()?->level ?? '-'; ?></td>
                             <td>
                                 <a href="<?= base_url('admin/user/edit/' . $user->id) ?>" class="btn btn-primary btn-icon">
                                     <i class="fa-solid fa-pen"></i>

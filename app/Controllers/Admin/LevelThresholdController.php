@@ -9,48 +9,28 @@ use CodeIgniter\HTTP\ResponseInterface;
 class LevelThresholdController extends BaseController
 {
     private $levelThresholdModel;
-    private $userModel;
     protected $layout = 'back';
+    protected $current_menu = 'level_threshold';
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->levelThresholdModel = model('LevelThresholdModel');
-        $this->userModel = model('UserModel');
     }
-
     public function index()
     {
-        $this->title = "Courbe des niveaux";
-
-        $levelThresholds = $this->levelThresholdModel
-            ->orderBy('level', 'ASC')
-            ->findAll();
-
-        $users = $this->userModel->findAll();
-
-        return $this->render('admin/level-threshold/index', [
-            'levelThresholds' => $levelThresholds,
-            'users' => $users
-        ]);
+        helper('form');
+        $levelThresholds = $this->levelThresholdModel->orderBy('level', 'ASC')->findAll();
+        return $this->render('admin/level-threshold/index', ['levelThresholds' => $levelThresholds]);
     }
 
-    public function add()
-    {
-        $level = $this->request->getPost('level');
-        $experienceRequired = $this->request->getPost('experience_required');
-
-        $this->levelThresholdModel->insert([
-            'level' => $level,
-            'experience_required' => $experienceRequired
-        ]);
-
-        return redirect()->to(base_url('level'))->with(
-            'success',
-            'Le niveau ' . $level . ' a bien été ajouté.'
-        );
+    public function create() {
+        $data = $this->request->getPost();
+        if ($this->levelThresholdModel->insert($data)) {
+            $this->success("Niveau ajouté !");
+        } else {
+            $this->error("Erreur lors de l'ajout du niveau");
+        }
+        return $this->redirect('/admin/level-threshold');
     }
-
-
 
     public function delete() {
         $id = $this->request->getVar('id');
@@ -59,7 +39,7 @@ class LevelThresholdController extends BaseController
         } else {
             $this->error("Erreur lors de la suppression du niveau");
         }
-        return redirect()->to('/admin/level-treshold');
+        return $this->redirect('/admin/level-threshold');
     }
 
     public function update() {

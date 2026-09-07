@@ -6,6 +6,10 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return $this->render('home');
+        $user = auth()->user();
+
+        return $this->render('home', [
+            'user' => $user,
+        ]);
     }
 }
