@@ -150,12 +150,10 @@ class AuthController extends BaseController
             // déjà été créé automatiquement. On vérifie avant d'en créer un second
             // pour éviter une violation de contrainte d'unicité en base.
             if (!$playerModel->findByUserId($user->id)) {
-                // On crée un Player avec la clé étrangère user_id,
-                // le niveau initial et l'expérience initiale.
+                // On crée un Player minimal avec juste la clé étrangère user_id.
+                // Les autres champs (pseudo, avatar…) pourront être remplis plus tard par l'utilisateur.
                 $player = new Player([
-                    'user_id'    => $user->id,
-                    'level'      => 1,
-                    'experience' => 0,
+                    'user_id' => $user->id,
                 ]);
                 $playerModel->save($player);
             }

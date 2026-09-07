@@ -1,53 +1,42 @@
 <?php
 
-namespace App\Models;
+namespace App\Database\Seeds;
 
-use CodeIgniter\Model;
+use CodeIgniter\Database\Seeder;
+use CodeIgniter\I18n\Time;
 
-class LevelthresholdModel extends Model
+class LevelThresholdSeeder extends Seeder
 {
-    protected $table            = 'level_thresholds';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
-        'level',
-        'experience_required',
-    ];
+    public function run()
+    {
+        $data = [];
+        $now  = Time::now()->toDateTimeString();
 
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
+        // Expérience de base pour le niveau 1
+        $baseExp = 100;
 
-    protected array $casts = [
-        'id'                  => 'integer',
-        'level'               => 'integer',
-        'experience_required' => 'integer',
-    ];
-    protected array $castHandlers = [];
+        // Exposant d'agressivité de la courbe (1.5 donne une bonne progression de RPG)
+        $exponent = 1.2;
 
-    // Dates
-    protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+        for ($level = 1; $level <= 20; $level++) {
+            if ($level === 1) {
+                // Niveau 1 : commence à 0 EXP
+                $expRequired = 0;
+            } else {
+                // Calcul courbe exponentielle : base * (level - 1)^exponent
+                // Arrondi aux 10 supérieurs pour avoir de beaux chiffres
+                $expRequired = (int) round(($baseExp * pow($level - 1, $exponent)) / 10) * 10;
+            }
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+            $data[] = [
+                'level'               => $level,
+                'experience_required' => $expRequired,
+                'created_at'          => $now,
+                'updated_at'          => $now,
+            ];
+        }
 
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+        // Insertion groupée dans la table 'level_thresholds'
+        $this->db->table('level_thresholds')->insertBatch($data);
+    }
 }

@@ -3,13 +3,23 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class AdminController extends BaseController
 {
     protected $layout = "back";
+
     public function index()
     {
-       return $this->render('admin/dashboard');
+        $user = auth()->user();
+
+
+        ([
+            'loggedIn' => auth()->loggedIn(),
+            'user' => $user,
+            'groups' => $user->getGroups(),
+            'isAdmin' => $user->inGroup('admin'),
+        ]);
+
+        return $this->render('admin/dashboard');
     }
 }

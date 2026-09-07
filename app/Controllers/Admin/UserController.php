@@ -53,6 +53,7 @@ class UserController extends BaseController
     private $userModel;
     private $playerModel;
 
+    protected $current_menu = 'user';
     /**
      * CONSTRUCTEUR
      *
@@ -189,6 +190,7 @@ class UserController extends BaseController
         // SAUVEGARDE EN BASE DE DONNÉES
         // save() fait un UPDATE si l'entité a un ID, ou un INSERT si elle n'en a pas.
         // Il retourne true en cas de succès, false en cas d'erreur.
+
         $saveUserOK = $this->userModel->save($user);
         $savePlayerOk = $this->playerModel->save($player);
 
