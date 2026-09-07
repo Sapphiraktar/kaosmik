@@ -44,7 +44,7 @@
                     <span class="input-icon-addon">
                         <i class="fa-solid fa-percent fa-xs"></i>
                     </span>
-                    <input type="number" name="appearance_rate" class="form-control" placeholder="Taux d'apparition" min="0" step="0.0001" required title="Taux d'apparition">
+                    <input type="number" name="appearance_rate" class="form-control" placeholder="Taux d'apparition" min="0" step="1" required title="Taux d'apparition">
                 </div>
 
                 <div class="d-grid">
