@@ -11,7 +11,6 @@ class LevelThresholdController extends BaseController
     private $levelThresholdModel;
     protected $layout = 'back';
     protected $current_menu = 'level_threshold';
-
     public function __construct(){
         $this->levelThresholdModel = model('LevelThresholdModel');
     }
