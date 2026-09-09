@@ -49,11 +49,12 @@ class CreateRarityLevelsTable extends Migration
                 'null' => false,
             ]
         ]);
+
         $this->forge->addPrimaryKey('id');
         $this->forge->createTable('rarity_levels');
 
-        $this ->db->table('rarity_levels')->insert([
-            'name' => 'commun',
+        $this->db->table('rarity_levels')->insert([
+            'name' => 'Commun',
             'color' => '#9E9E9E',
             'power_multiplier' => 1.00,
             'cost_multiplier' => 1.00,

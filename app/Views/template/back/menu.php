@@ -1,14 +1,37 @@
-<aside  class="navbar navbar-vertical navbar-expand-sm position-absolute"
+<aside  class="navbar navbar-vertical navbar-expand-md"
         data-bs-theme="dark">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <h1 class="navbar-brand navbar-brand-autodark">
+        <div class="navbar-brand navbar-brand-autodark m-auto">
             <a href="<?= base_url('admin'); ?>">
                 <img src="<?= base_url('/assets/img/logo-150.png'); ?>" alt="" class="navbar-brand-img">
             </a>
-        </h1>
+        </div>
+
+        <div class="navbar-footer mt-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item dropup">
+                    <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-label="Open user menu" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="nav-link-title">
+                            Admin
+                        </span>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= base_url('logout'); ?>">
+                            Se deconnecter
+                        </a>
+                        <a class="dropdown-item" href="<?= base_url(); ?>">
+                            Voir le site
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
                 <?php foreach ($menus as $key => $menu): ?>
