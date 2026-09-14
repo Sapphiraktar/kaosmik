@@ -9,29 +9,6 @@
                 <img src="<?= base_url('/assets/img/logo-150.png'); ?>" alt="" class="navbar-brand-img">
             </a>
         </div>
-
-        <div class="navbar-footer mt-auto">
-            <ul class="navbar-nav">
-                <li class="nav-item dropup">
-                    <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-label="Open user menu" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i>
-                        <span class="nav-link-title">
-                            Admin
-                        </span>
-                    </a>
-
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<?= base_url('logout'); ?>">
-                            Se deconnecter
-                        </a>
-                        <a class="dropdown-item" href="<?= base_url(); ?>">
-                            Voir le site
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
                 <?php foreach ($menus as $key => $menu): ?>
@@ -75,6 +52,26 @@
                         </li>
                     <?php endif; ?>
                 <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="navbar-footer">
+            <ul class="navbar-nav">
+                <li class="nav-item dropup">
+                    <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-label="Open user menu" aria-expanded="false">
+                        <i class="fa-solid fa-user me-2"></i>
+                        <span class="nav-link-title">
+                            <?= $logged_user->username; ?>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= base_url('logout'); ?>">
+                            Se déconnecter
+                        </a>
+                        <a class="dropdown-item" href="<?= base_url(); ?>">
+                            Voir le site
+                        </a>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

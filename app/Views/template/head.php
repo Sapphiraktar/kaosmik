@@ -23,6 +23,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="<?= base_url('/css/style.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('/css/kaosmik.css'); ?>">
     <!-- JQUEYR -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
     <!-- JS -->
@@ -47,7 +48,7 @@
     <!-- CHARTJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-<body>
+<body class="bg-cosmic">
 <div class="page">
     <?php if (isset($menus)): ?>
         <?= view("template/{$layout}/menu"); ?>
