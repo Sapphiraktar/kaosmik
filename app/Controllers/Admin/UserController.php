@@ -13,10 +13,10 @@ namespace App\Controllers\Admin;
  * On importe les classes dont on a besoin dans ce fichier.
  * Sans ces lignes, PHP ne saurait pas où trouver "BaseController", "Player", etc.
  */
+
 use App\Controllers\BaseController;
 use App\Entities\Player;
 use App\Entities\User;
-use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * CONTRÔLEUR ADMIN - GESTION DES UTILISATEURS

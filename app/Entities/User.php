@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Models\PlayerModel;
 use CodeIgniter\Shield\Entities\User as ShieldUser;
+
 class User extends ShieldUser
 {
     protected ?Player $player = null;
