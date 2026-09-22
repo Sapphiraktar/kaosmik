@@ -2,17 +2,24 @@
 
 namespace App\Models;
 
-use App\Entities\Cantina;
+use App\Entities\Media;
 use CodeIgniter\Model;
 
-class CantinaModel extends Model
+class MediaModel extends Model
 {
-    protected $table            = 'Cantinas';
+    protected $table            = 'medias';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = Cantina::class;
+    protected $returnType       = Media::class;
     protected $useSoftDeletes   = false;
-    protected $allowedFields    = ['player_id','hero_model_id','rarity_id','name','power','cost_credit'];
+    protected $protectFields    = true;
+    protected $allowedFields    = ['entity_type','entity_id','name','url','alt','title', 'type'];
+
+    protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
+
+    protected array $casts = [];
+    protected array $castHandlers = [];
 
     // Dates
     protected $useTimestamps = true;
@@ -37,4 +44,8 @@ class CantinaModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getOneMedia($entity_type, $entity_id) { return $this->where('entity_type', $entity_type) ->where('entity_id', $entity_id) ->first();
+    }
 }

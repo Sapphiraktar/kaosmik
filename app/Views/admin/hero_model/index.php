@@ -10,6 +10,7 @@
         </div>
     </div>
 </div>
+
 <div class="row mt-3">
     <div class="col">
         <div class="card">
@@ -30,6 +31,7 @@
                         <th data-sortable="false">Actions</th>
                     </tr>
                     </thead>
+
                     <tbody>
                     <?php foreach ($heromodels as $hm) : ?>
                         <tr>
@@ -39,10 +41,18 @@
                             <td><?= $hm->power_min; ?> / <?= $hm->power_max; ?></td>
                             <td><?= $hm->cost_credits_min; ?> / <?= $hm->cost_credits_max; ?></td>
                             <td><?= $hm->level_required; ?></td>
+
                             <td>
-                                <a href="<?= base_url('/admin/hero-model/edit/' . $hm->id); ?>" class="btn btn-warning btn-sm"><i class="fa-solid fa-pen"></i></a>
+                                <a href="<?= base_url('/admin/hero-model/edit/' . $hm->id); ?>"
+                                   class="btn btn-warning btn-sm">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+
                                 <?php if($hm->id != 1) : ?>
-                                    <a href="<?= base_url('/admin/hero-model/delete/' . $hm->id); ?>" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="<?= base_url('/admin/hero-model/delete/' . $hm->id); ?>"
+                                       class="btn btn-danger btn-sm deleteHeroModel">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -53,3 +63,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on('click', '.deleteHeroModel', function(e) {
+        e.preventDefault();
+
+        const url = this.href;
+
+        Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: 'Cette action est irréversible !',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Oui, supprimer',
+            cancelButtonText: 'Annuler'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    });
+</script>

@@ -46,12 +46,15 @@ if (isset($user)) {
             </div>
         </div>
         <?php if (isset($user) && $user->getPlayer() !== null)  : ?>
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">Informations joueur(s)</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            AVATAR
+                            <div class="mb-3">
+                                <img src="<?= ($user->getImage() ) ? $user->getImage()->getUrl(): base_url('assets/img/no-img.png'); ?>" alt="Avatar" class="rounded mb-3">
+                                <input type="file" name="avatar" id="avatar" accept="image/*" class="form-control">
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="row mb-3">
@@ -89,6 +92,22 @@ if (isset($user)) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">L'équipage</div>
+                <div class="card-body">
+                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
+                        <?php if(count($user->getPlayer()->getHeroes()) > 0) : ?>
+                            <?php foreach($user->getPlayer()->getHeroes() as $hero) : ?>
+                                <div class="col">
+                                    <?= view_cell('HeroCell', ['character' => $hero]); ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            L'équipage est tristement vide.
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

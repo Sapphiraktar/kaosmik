@@ -25,4 +25,14 @@ class User extends ShieldUser
         $this->player = $player;
         return $this;
     }
+
+    public function getImage()
+    {
+        $mediaModel = model('MediaModel');
+        return $mediaModel->getOneMedia('users', $this->id);
+    }
+
+    public function isAdmin() {
+        return $this->inGroup('admin');
+    }
 }

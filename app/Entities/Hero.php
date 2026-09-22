@@ -28,8 +28,7 @@ class Hero extends Entity
         'player_id' => 'int',
         'hero_model_id' => 'int',
         'rarity_id' => 'int',
-        'name' =>
-            'string',
+        'name' => 'string',
         'power' => 'int',
         'cost_credit' => 'int',
         'stamina_current' => 'int',

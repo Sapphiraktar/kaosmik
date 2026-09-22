@@ -24,4 +24,12 @@ class HeroModel extends Entity
         $sm = model(\App\Models\SpecializationModel::class);
         return $sm->find($this->attributes['specialization_id']);
     }
+
+    public function getImage()
+    {
+        $mediaModel = model('MediaModel');
+        return $mediaModel->where('entity_type', 'hero_models')
+            ->where('entity_id', $this->attributes['id'])
+            ->first();
+    }
 }

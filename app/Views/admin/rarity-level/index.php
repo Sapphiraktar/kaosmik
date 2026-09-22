@@ -64,7 +64,7 @@
                     <?php foreach ($rarityLevels as $rarityLevel) : ?>
                         <tr>
                             <td><?= $rarityLevel->name; ?></td>
-                            <td><span class="badge" style="background-color:<?= $rarityLevel->color; ?>"><?= $rarityLevel->color; ?></span></td>
+                            <td><span class="badge fw-bold" style="background-color:<?= $rarityLevel->color; ?>; color:white;"><?= $rarityLevel->color; ?></span></td>
                             <td><?= $rarityLevel->power_multiplier; ?></td>
                             <td><?= $rarityLevel->cost_multiplier; ?></td>
                             <td><?= $rarityLevel->appearance_rate; ?></td>

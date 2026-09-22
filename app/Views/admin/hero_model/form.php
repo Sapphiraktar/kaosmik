@@ -1,3 +1,4 @@
+
 <div class="row align-items-center mb-3">
     <div class="col">
         <div class="page-title">
@@ -23,8 +24,12 @@
                         <input type="text" name="name" class="form-control" placeholder="Nom" title="Nom" value="<?= isset($hm) ? $hm->name : ''?>" required>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
+                <?php if (isset($hm)) : ?>
+                <div class="mb-3 dflex">
+                    <img class="avatar me-3" src="<?= (isset($hm) && $hm->getImage()) ? $hm->getImage()->getUrl() : base_url('assets/img/no-img.png'); ?>">
+
+
+                    <input type="file" name="image" class="form-control" placeholder="Nom" title="Nom" required>
                     <textarea class="form-control" name="description" placeholder="Description"><?= isset($hm) ? esc($hm->description) : '';?></textarea>
                 </div>
                 <div class="mb-3">
@@ -92,6 +97,7 @@
                     </button>
                 </div>
                 <?= form_close(); ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
