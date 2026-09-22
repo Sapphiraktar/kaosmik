@@ -47,12 +47,8 @@
                             <td><?= $lt['level'];?></td>
                             <td><?= $lt['experience_required'];?></td>
                             <td class="d-flex">
-                                <?= form_open('admin/level-threshold/delete'); ?>
-                                <?= form_hidden('id', $lt['id']);?>
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-                                <?= form_close(); ?>
                                 <span
-                                        class="ms-2 btn btn-sm btn-warning openEditModal"
+                                        class="btn btn-sm btn-warning openEditModal"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editModal"
                                         data-level="<?= $lt['level'];?>"
@@ -60,13 +56,20 @@
                                         data-id="<?= $lt['id'];?>">
                                     <i class="fa-solid fa-pen"></i>
                                 </span>
+                                <div class="ms-2">
+                                <?= form_open('admin/level-threshold/delete'); ?>
+                                <?= form_hidden('id', $lt['id']);?>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                                <?= form_close(); ?>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>
@@ -83,7 +86,6 @@
                 <div class="input-icon mb-3">
                     <span class="input-icon-addon">
                         <i class="fa-solid fa-n fa-xs"></i>
-                        <i class="fa-solid fa-v fa-xs"></i>
                     </span>
                     <input id="updateLevel" type="number" name="level" class="form-control" placeholder="Niveau" value="" min="1" title="Niveau">
                 </div>
@@ -112,18 +114,22 @@
     }
 </style>
 <script>
-    $(document).ready(function(){
-        // A n'écouter qu'en JS natif : tabler.min.js dispatche un évènement DOM
-        // dont le "type" est littéralement "show.bs.modal". jQuery .on('show.bs.modal', ...)
-        // interprète le point comme un namespace et n'écoute que "show", donc ne se déclenche jamais.
-        document.getElementById('editModal').addEventListener('show.bs.modal', function (event) {
-            let button = event.relatedTarget;
-            let id = button.getAttribute('data-id');
-            let level = button.getAttribute('data-level');
-            let exp = button.getAttribute('data-exp');
-            $('#updateId').val(id);
-            $('#updateLevel').val(level);
-            $('#updateExperience').val(exp);
-        })
+    $(document).on('submit', 'form[action*="level-threshold/delete"]', function(e) {
+        e.preventDefault();
+        let form = $(this);
+        Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: 'Cette action est irréversible !',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Oui, supprimer',
+            cancelButtonText: 'Annuler'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.get(0).submit();
+            }
+        });
     });
 </script>

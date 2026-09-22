@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Database\Seeds;
+
 use CodeIgniter\Database\Seeder;
 
 class RarityLevelSeeder extends Seeder
@@ -9,35 +10,44 @@ class RarityLevelSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Commun',
-                'color' => '#808080',
-                'power_multiplier' => 1.00,
-                'cost_multiplier' => 1.00,
-                'appearance_rate' => 0.5000,
+                'name' => 'Peu Commun',
+                'color' => '#1EFF00',
+                'power_multiplier' => '1.1',
+                'cost_multiplier' => '1.1',
+                'appearance_rate' => '12',
             ],
             [
                 'name' => 'Rare',
-                'color' => '#0080FF',
-                'power_multiplier' => 1.25,
-                'cost_multiplier' => 1.25,
-                'appearance_rate' => 0.3000,
+                'color' => '#0070DD',
+                'power_multiplier' => '1.3',
+                'cost_multiplier' => '1.3',
+                'appearance_rate' => '8',
             ],
             [
                 'name' => 'Épique',
-                'color' => '#8000FF',
-                'power_multiplier' => 1.50,
-                'cost_multiplier' => 1.50,
-                'appearance_rate' => 0.1500,
+                'color' => '#A335EE',
+                'power_multiplier' => '1.5',
+                'cost_multiplier' => '1.5',
+                'appearance_rate' => '4',
             ],
             [
                 'name' => 'Légendaire',
                 'color' => '#FF8000',
-                'power_multiplier' => 2.00,
-                'cost_multiplier' => 2.00,
-                'appearance_rate' => 0.0500,
+                'power_multiplier' => '1.7',
+                'cost_multiplier' => '1.7',
+                'appearance_rate' => '2',
             ],
+            [
+                'name' => 'Mythique',
+                'color' => '#E60012',
+                'power_multiplier' => '2',
+                'cost_multiplier' => '2',
+                'appearance_rate' => '1',
+            ]
         ];
-
-        $this->db->table('raritylevels')->insertBatch($data);
+        $rarityModel = model('RarityLevelModel');
+        foreach($data as $row) {
+            $rarityModel->insert($row);
+        }
     }
 }

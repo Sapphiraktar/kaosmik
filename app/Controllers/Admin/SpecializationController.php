@@ -3,68 +3,56 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\SpecializationModel;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class SpecializationController extends BaseController
 {
+    private $specializationModel;
     protected $layout = 'back';
     protected $current_menu = 'specialization';
 
-    private $specializationModel;
-
-    public function __construct()
-    {
+    public function __construct(){
         $this->specializationModel = model('SpecializationModel');
     }
 
     public function index()
     {
         helper('form');
-
         $specializations = $this->specializationModel->findAll();
-
-        return $this->render('admin/specialization/index', [
-            'specializations' => $specializations
-        ]);
+        return $this->render('admin/specialization/index', ['specializations' => $specializations]);
     }
 
-    public function create()
-    {
+    public function create() {
         $data = $this->request->getPost();
-
-        $saveOk = $this->specializationModel->insert($data);
-
-        if ($saveOk) {
+        if ($this->specializationModel->insert($data)) {
             $this->success('Spécialisation ajoutée');
         } else {
-            $this->error('Une erreur est survenue, la spécialisation n\'est pas ajoutée.');
+            $this->error("Une erreur est survenue, la spécialisation n'est pas ajoutée.");
         }
-
         return $this->redirect('admin/specialization');
     }
 
-    public function update()
-    {
+    public function update() {
         $data = $this->request->getPost();
-
-        $saveOk = $this->specializationModel->update($data['id'], $data);
-
-        if ($saveOk) {
-            $this->success('Spécialisation modifiée');
-        } else {
-            $this->error('Une erreur est survenue, la spécialisation n\'est pas modifiée.');
+        $id = $data['id'];
+        unset($data['id']);
+        try {
+            if ($this->specializationModel->update($id, $data)) {
+                $this->success('Spécialisation modifiée');
+            } else {
+                $this->error("Une erreur est survenue, la spécialisation n'est pas modifiée.");
+            }
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
-
         return $this->redirect('admin/specialization');
     }
 
-    public function delete()
-    {
+    public function delete() {
         try {
             $id = $this->request->getPost('id');
-
-            $deleteOk = $this->specializationModel->delete($id);
-
-            if ($deleteOk) {
+            if ($this->specializationModel->delete($id)) {
                 $this->success('Spécialisation supprimée');
             } else {
                 $this->error('Une erreur est survenue');
@@ -72,7 +60,6 @@ class SpecializationController extends BaseController
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
-
         return $this->redirect('admin/specialization');
     }
 }

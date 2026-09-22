@@ -58,6 +58,9 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropup">
                     <a href="#" class="nav-link" data-bs-toggle="dropdown" aria-label="Open user menu" aria-expanded="false">
+                        <span class="avatar avatar-sm"
+                              style="background-image: url(<?= (isset($logged_user) && $logged_user->getImage()) ? $logged_user->getImage()->getUrl() : base_url('/assets/img/no-img.png'); ?>)">
+                    </span>
                         <i class="fa-solid fa-user me-2"></i>
                         <span class="nav-link-title">
                             <?= $logged_user->username; ?>

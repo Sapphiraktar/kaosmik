@@ -18,13 +18,19 @@ class HeroModelsSeeder extends Seeder
 
         $specMap = array_column($specs, 'id', 'name');
 
-        // Id par défaut (Recrue) au cas où une spécialisation est introuvable
-        $defaultSpecId = $specMap['Recrue'] ?? 1;
+        // Id par défaut (Infiltrateur) au cas où une spécialisation est introuvable
+        $defaultSpecId = $specMap['Infiltrateur'] ?? null;
+
+        if ($defaultSpecId === null) {
+            throw new \RuntimeException(
+                'La spécialisation "Infiltrateur" n\'existe pas dans la table specializations.'
+            );
+        }
 
         $heroModels = [
             // Recrue / Généraliste
             [
-                'specialization_id' => $specMap['Recrue'] ?? $defaultSpecId,
+                'specialization_id' => $specMap['Infiltrateur'] ?? $defaultSpecId,
                 'name'             => 'Cadet de la Flotte',
                 'description'      => 'Modèle standard polyvalent, prêt à être assigné à n\'importe quelle tâche.',
                 'power_min'        => 10,

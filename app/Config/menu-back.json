@@ -17,17 +17,16 @@
     "icon" : "<i class=\"fa-solid fa-star\"></i>",
     "class": ""
   },
-  "hero_model" : {
-    "title" : "Model de héro",
-    "url" : "/admin/hero-model",
-    "icon" : "<i class=\"fa-solid fa-shield-halved\"></i>",
+  "specialization" : {
+    "title" : "Spécialisations",
+    "url" : "/admin/specialization",
+    "icon" : "<i class=\"fa-solid fa-graduation-cap\"></i>",
     "class": ""
   },
-  "specialization": {
-    "title": "Spécialisations",
-    "url": "/admin/specialization",
-    "icon": "<i class=\"fa-solid fa-user-gear\"></i>",
-    "class": ""
+  "hero_model" : {
+    "title" : "Model de Hero",
+    "url" : "/admin/hero-model",
+    "icon" : "<i class=\"fa-solid fa-shield-halved \"></i>",
+    "class" : ""
   }
 }
-

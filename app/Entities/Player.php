@@ -16,6 +16,7 @@ class Player extends Entity
         'experience' => 0,
         'credits' => 1000,
         'fusion_energy' => 0,
+        'fleet_capacity' => 10,
     ];
     protected $casts   = [
         'id'  => 'integer',
@@ -24,11 +25,13 @@ class Player extends Entity
         'experience' => 'integer',
         'credits' => 'integer',
         'fusion_energy' => 'integer',
+        'fleet_capacity' => 'integer',
     ];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];
 
     protected ?User $user = null;
 
+    protected $heroes = array();
     public function getUser(): ?User
     {
         if($this->user === null && !empty($this->attributes['user_id'])) {
@@ -72,5 +75,29 @@ class Player extends Entity
 
         //On retourne le niveau trouvé sinon 1
         return $threshold ? (int) $threshold['level'] : 1;
+    }
+
+    public function getHeroes() {
+        if(!empty($this->heroes)) {
+            return $this->heroes;
+        }
+        $heroModel = model('HeroModel');
+        $this->heroes = $heroModel->where('player_id', $this->attributes['id'])->findAll();
+        return $this->heroes;
+    }
+
+    public function isFleetFull() {
+        if ( $this->attributes['fleet_capacity'] <= count($this->getHeroes())) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getTotalPower() {
+        $totalPower = 0;
+        foreach($this->getHeroes() as $hero) {
+            $totalPower += $hero->power;
+        }
+        return $totalPower;
     }
 }
