@@ -26,8 +26,7 @@ class User extends ShieldUser
         return $this;
     }
 
-    public function getImage()
-    {
+    public function getImage() {
         $mediaModel = model('MediaModel');
         return $mediaModel->getOneMedia('users', $this->id);
     }

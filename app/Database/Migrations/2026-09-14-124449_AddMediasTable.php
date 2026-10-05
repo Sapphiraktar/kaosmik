@@ -22,12 +22,12 @@ class AddMediasTable extends Migration
             ],
             'entity_type' => [
                 'type' => 'VARCHAR',
-                'constraint' => 11,
+                'constraint' => 30,
                 'null' => false,
             ],
             'name' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
+                'constraint' => 255
             ],
             'url' => [
                 'type' => 'TEXT',
@@ -55,7 +55,7 @@ class AddMediasTable extends Migration
                 'type' => 'DATETIME',
                 'null' => true,
             ]
-            ]);
+        ]);
         $this->forge->addPrimaryKey('id');
         $this->forge->createTable('medias');
     }

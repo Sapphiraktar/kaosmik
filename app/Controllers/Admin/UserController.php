@@ -142,23 +142,7 @@ class UserController extends BaseController
     {
         // getPost() récupère toutes les données envoyées via le formulaire (méthode HTTP POST)
         $data = $this->request->getPost();
-        $avatar = $this->request->getFile('avatar');
-        if ($avatar->isValid() && ! $avatar->hasMoved()) {
-            helper('media');
-            $result = uplaod_single_image(
-                $avatar,
-                'users',
-                $data['username'],
-                [
-                    'entity_type' => 'users',
-                    'entity_id' => $data['id'],
-                ]
 
-            );
-            if (!$result) {
-                $this->error('Une erreur est survenue lors de l\'upload de l\'image.');
-            }
-        }
         // VALIDATION : on vérifie que l'ID est bien présent dans les données du formulaire.
         // Sans ID, on ne sait pas quel utilisateur modifier → on redirige avec une erreur.
         if (!isset($data['id'])) {
@@ -234,7 +218,6 @@ class UserController extends BaseController
     public function create()
     {
         $data = $this->request->getPost();
-        $avatar = $this->request->getFile('avatar');
 
         // NORMALISATION DU CHAMP "active" (même logique que dans update())
         // L'opérateur ternaire ? : est une façon condensée d'écrire un if/else.

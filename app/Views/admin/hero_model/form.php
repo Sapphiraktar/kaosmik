@@ -1,4 +1,3 @@
-
 <div class="row align-items-center mb-3">
     <div class="col">
         <div class="page-title">
@@ -25,11 +24,13 @@
                     </div>
                 </div>
                 <?php if (isset($hm)) : ?>
-                <div class="mb-3 dflex">
-                    <img class="avatar me-3" src="<?= (isset($hm) && $hm->getImage()) ? $hm->getImage()->getUrl() : base_url('assets/img/no-img.png'); ?>">
-
-
-                    <input type="file" name="image" class="form-control" placeholder="Nom" title="Nom" required>
+                    <div class="mb-3 d-flex">
+                        <img class="avatar me-3" src="<?= (isset($hm) && $hm->getImage()) ? $hm->getImage()->getUrl() : base_url('/assets/img/no-img.png'); ?>">
+                        <input type="file" name="image" class="form-control" placeholder="Image" title="Image">
+                    </div>
+                <?php endif; ?>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
                     <textarea class="form-control" name="description" placeholder="Description"><?= isset($hm) ? esc($hm->description) : '';?></textarea>
                 </div>
                 <div class="mb-3">
@@ -51,7 +52,7 @@
                         <span class="input-icon-addon">
                             <i class="fa-solid fa-hand-fist"></i>
                         </span>
-                        <input type="number" name="power_min" class="form-control" placeholder="Puissance Minimale" title="Puissance Minimale" value="<?= isset($hm) ? $hm->power_min : ''?>" required">
+                        <input type="number" name="power_min" class="form-control" placeholder="Puissance Minimale" title="Puissance Minimale" value="<?= isset($hm) ? $hm->power_min : ''?>" required>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -60,7 +61,7 @@
                             <span class="input-icon-addon">
                                 <i class="fa-solid fa-hand-fist"></i>
                             </span>
-                        <input type="number" name="power_max" class="form-control" placeholder="Puissance Maximale" title="Puissance Maximale" value="<?= isset($hm) ? $hm->power_max : ''?>" required">
+                        <input type="number" name="power_max" class="form-control" placeholder="Puissance Maximale" title="Puissance Maximale" value="<?= isset($hm) ? $hm->power_max : ''?>" required>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -69,7 +70,7 @@
                             <span class="input-icon-addon">
                                 <i class="fa-solid fa-cent-sign"></i>
                             </span>
-                        <input type="number" name="cost_credits_min" class="form-control" placeholder="Coût minimum" title="Coût minimum" value="<?= isset($hm) ? $hm->cost_credits_min : ''?>" required">
+                        <input type="number" name="cost_credits_min" class="form-control" placeholder="Coût minimum" title="Coût minimum" value="<?= isset($hm) ? $hm->cost_credits_min : ''?>" required>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -78,7 +79,7 @@
                             <span class="input-icon-addon">
                                 <i class="fa-solid fa-cent-sign"></i>
                             </span>
-                        <input type="number" name="cost_credits_max" class="form-control" placeholder="Coût maximum" title="Coût maximum" value="<?= isset($hm) ? $hm->cost_credits_max : ''?>" required">
+                        <input type="number" name="cost_credits_max" class="form-control" placeholder="Coût maximum" title="Coût maximum" value="<?= isset($hm) ? $hm->cost_credits_max : ''?>" required>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -97,7 +98,6 @@
                     </button>
                 </div>
                 <?= form_close(); ?>
-                <?php endif; ?>
             </div>
         </div>
     </div>

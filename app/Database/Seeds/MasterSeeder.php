@@ -10,6 +10,9 @@ class MasterSeeder extends Seeder
     {
         $this->call('LevelThresholdSeeder');
         $this->call('SpecializationSeeder');
+        $this->call('RarityLevelSeeder');
         $this->call('HeroModelsSeeder');
+        $this->call('HeroNamesSeeder');
+        $this->call('MissionSeeder');
     }
 }
