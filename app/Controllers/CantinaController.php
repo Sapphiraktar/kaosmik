@@ -17,6 +17,9 @@ class CantinaController extends BaseController
     {
         $this->title = "La Cantina";
         helper('form');
+
+        $this->title = "La Cantina";
+        helper('form');
         $cantina = service('cantina');
         $data = $cantina->getOrGenerateOffers(auth()->user()->getPlayer()->id);
         return $this->render('front/cantina/index', $data);

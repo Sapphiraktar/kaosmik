@@ -2,11 +2,11 @@
 
 namespace App\Entities;
 
+use App\Models\SpecializationModel;
 use CodeIgniter\Entity\Entity;
 
 class HeroModel extends Entity
 {
-    protected $datamap = [];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];
     protected $casts   = [
         'specialization_id' => 'int',
@@ -16,20 +16,21 @@ class HeroModel extends Entity
         'power_max' => 'int',
         'cost_credits_min' => 'int',
         'cost_credits_max' => 'int',
-        'level_required' => 'int',
+        'level_required' => 'int'
     ];
 
-    public function getSpecialization()
-    {
-        $sm = model(\App\Models\SpecializationModel::class);
-        return $sm->find($this->attributes['specialization_id']);
+    protected $specialization = null;
+    public function getSpecialization() {
+        if($this->specialization === null && ($this->specialization_id)) {
+            $sm = model('SpecializationModel');
+            $this->specialization = $sm->where('id', $this->specialization_id)->first();
+        }
+        return $this->specialization;
+
     }
 
-    public function getImage()
-    {
+    public function getImage() {
         $mediaModel = model('MediaModel');
-        return $mediaModel->where('entity_type', 'hero_models')
-            ->where('entity_id', $this->attributes['id'])
-            ->first();
+        return $mediaModel->getOneMedia('hero_models', $this->id);
     }
 }

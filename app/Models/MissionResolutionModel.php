@@ -2,17 +2,31 @@
 
 namespace App\Models;
 
-use App\Entities\Cantina;
+use App\Entities\MissionResolution;
 use CodeIgniter\Model;
 
-class CantinaModel extends Model
+class MissionResolutionModel extends Model
 {
-    protected $table            = 'cantinas';
+    protected $table            = 'mission_resolutions';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = Cantina::class;
+    protected $returnType       = MissionResolution::class;
     protected $useSoftDeletes   = false;
-    protected $allowedFields    = ['player_id','hero_model_id','rarity_id','name','power','cost_credit'];
+    protected $protectFields    = true;
+    protected $allowedFields    = [
+        'player_id',
+        'mission_id',
+        'success',
+        'credits_gained',
+        'energy_gained',
+        'experience_gained',
+    ];
+
+    protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
+
+    protected array $casts = [];
+    protected array $castHandlers = [];
 
     // Dates
     protected $useTimestamps = true;

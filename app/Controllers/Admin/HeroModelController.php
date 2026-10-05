@@ -48,23 +48,18 @@ class HeroModelController extends BaseController
         if($saveOk) {
             if (isset($heromodeldata['id'])) {
                 $img = $this->request->getFile('image');
-                if ($img->isValid() && ! $img->hasMoved()) {
+                if ($img->isValid() && !$img->hasMoved()) {
                     helper('media');
-                    $result = uplaod_single_image(
+                    $result = upload_single_image(
                         $img,
-                        'hero_model',
+                        'hero_models',
                         $heromodeldata['name'],
                         [
                             'entity_type' => 'hero_models',
-                            'entity_id' => $heromodeldata['id'],
+                            'entity_id' => $heromodeldata['id']
                         ]
-
                     );
-                    if (!$result) {
-                        $this->error('Une erreur est survenue lors de l\'upload de l\'image.');
-                    }
                 }
-
                 $this->success('Le modèle : ' . $heromodel->name . '. A bien été modifié.');
                 $id = $heromodeldata['id'];
             } else {
@@ -87,4 +82,3 @@ class HeroModelController extends BaseController
         return $this->redirect('/admin/hero-model');
     }
 }
-

@@ -51,10 +51,7 @@ if (isset($user)) {
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <img src="<?= ($user->getImage() ) ? $user->getImage()->getUrl(): base_url('assets/img/no-img.png'); ?>" alt="Avatar" class="rounded mb-3">
-                                <input type="file" name="avatar" id="avatar" accept="image/*" class="form-control">
-                            </div>
+                            AVATAR
                         </div>
                         <div class="col-md-6">
                             <div class="row mb-3">

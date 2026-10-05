@@ -10,9 +10,8 @@ class CrewController extends BaseController
     protected $current_menu = 'crew';
     protected $heroModel = null;
 
-    public function __construct()
-    {
-        $this->heroModel = model('heroModel');
+    public function __construct() {
+        $this->heroModel = model('HeroModel');
     }
     public function index()
     {
@@ -25,7 +24,7 @@ class CrewController extends BaseController
         //Si je n'ai pas d'ID hero
         if($id_heroes != null) {
             //Récupération du héro
-            $heroModel = model('HeroModel');
+
             $hero = $this->heroModel->find($id_heroes);
             //Récupération du joueur de l'utilisateur connecté
             $player = auth()->user()->getPlayer();
@@ -55,12 +54,11 @@ class CrewController extends BaseController
         if(!empty($ids) && is_array($ids)) {
             $player = auth()->user()->getPlayer();
 
-            $heroes = $this->heroModel->whereIn('id', $ids)->where('player_id',
-                $player->id)->findAll();
+            $heroes = $this->heroModel->whereIn('id', $ids)->where('player_id', $player->id)->findAll();
 
             $totalGain = 0;
             $deletedIds = array();
-            foreach ($heroes as $hero) {
+            foreach($heroes as $hero) {
                 $totalGain += (int) ($hero->cost_credit / 2);
                 $deletedIds[] = $hero->id;
             }
@@ -69,11 +67,11 @@ class CrewController extends BaseController
                 $player->credits += $totalGain;
                 model('PlayerModel')->save($player);
 
-                $this->success(count($deletedIds) . " mercenaire ont été licenciés. Vous avez récupéré <i class='fa-solid fa-cent-sign'></i>" . $totalGain . ".");
+                $this->success(count($deletedIds) . " mercenaires ont été licenciés. Vous avez récupéré <i class='fa-solid fa-cent-sign'></i>" . $totalGain );
                 return $this->redirect('/equipage');
             }
         }
-        $this->error('une erreur est survenue. Veuillez contacter un administrateur.');
+        $this->error('Une erreur est survenue. Veuillez contacter un administrateur.');
         return $this->redirect('/equipage');
     }
 }

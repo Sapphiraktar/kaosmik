@@ -7,6 +7,21 @@ use CodeIgniter\Entity\Entity;
 class Media extends Entity
 {
     protected $attributes = [
+        'id' => null,
+        'entity_id' => null,
+        'entity_type' => null,
+        'name' => null,
+        'url' => null,
+        'title' => null,
+        'alt' => null,
+        'type' => null,
+    ];
+    protected $datamap = [];
+    protected $dates   = ['created_at', 'updated_at'];
+    protected $casts   = [
+        'id' => 'integer',
+        'entity_id' => 'integer',
+        'entity_type' => 'string',
         'name' => 'string',
         'url' => 'string',
         'title' => 'string',

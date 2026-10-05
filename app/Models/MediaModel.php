@@ -13,7 +13,7 @@ class MediaModel extends Model
     protected $returnType       = Media::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['entity_type','entity_id','name','url','alt','title', 'type'];
+    protected $allowedFields    = ['entity_type','entity_id','name', 'url','alt','title','type'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -45,7 +45,9 @@ class MediaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
-    public function getOneMedia($entity_type, $entity_id) { return $this->where('entity_type', $entity_type) ->where('entity_id', $entity_id) ->first();
+    public function getOneMedia($entity_type, $entity_id) {
+        return $this->where('entity_type', $entity_type)
+            ->where('entity_id', $entity_id)
+            ->first();
     }
 }
