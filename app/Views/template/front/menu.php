@@ -78,6 +78,7 @@
                             <div class="dropdown-divider"></div>
                         <?php endif; ?>
                         <a href="#" class="dropdown-item">Mon compte</a>
+                        <a href="<?= base_url('chat'); ?>" class="dropdown-item">Messagerie</a>
                         <a href="<?= base_url('logout'); ?>" class="dropdown-item">Déconnexion</a>
                     </div>
                 </div>
