@@ -9,7 +9,7 @@ on:
 jobs:
   tests:
     name: Tests PHPUnit - PHP ${{ matrix.php }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
