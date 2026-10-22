@@ -1,0 +1,58 @@
+name: Tests KaosmiK
+
+on:
+  push:
+    branches: [main, test]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests PHPUnit - PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ['8.2', '8.4']
+
+    services:
+      mariadb:
+        image: mariadb:latest
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: kaosmik_tests
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Télécharger le code
+        uses: actions/checkout@v4
+
+      - name: Installer PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: intl, mbstring, mysqli
+          coverage: none
+
+      - name: Installer les dépendances
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Vérifier les dépendances
+        run: composer audit
+
+      - name: Lancer les tests PHPUnit
+        run: vendor/bin/phpunit --no-coverage --colors=always
+
+      - name: Archiver les journaux de tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-php-${{ matrix.php }}
+          path: build/logs/
+          if-no-files-found: ignore
