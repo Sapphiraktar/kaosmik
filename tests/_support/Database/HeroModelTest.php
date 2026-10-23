@@ -34,4 +34,15 @@ final class HeroModelTest extends CIUnitTestCase
         $this->heroModel = new HeroModel();
         $this->player = $this->createPlayer('joueur1');
     }
+    public function testCanReadHero(): void
+    {
+        $hero = $this->createHero($this->player, [
+            'name' => 'Beta Test',
+        ]);
+
+        $found = $this->heroModel->find($hero->id);
+
+        $this->assertInstanceOf(Hero::class, $found);
+        $this->assertSame('Beta Test', $found->name);
+    }
 }
