@@ -30,9 +30,11 @@ jobs:
           --health-retries=10
 
     steps:
-      - name: Télécharger le code
+      # 1 Télécharger le code
+      - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2 Installer PHP (extensions requises par CodeIgniter 4 et le driver MySQLi)
       - name: Installer PHP
         uses: shivammathur/setup-php@v2
         with:

@@ -8,6 +8,7 @@ $routes->get('/', 'Home::index');
 
 //Routes pour l'authentification
 $routes->get('login', [AuthController::class, 'loginView']);
+$routes->get('sign-in', [AuthController::class, 'loginView']);
 $routes->post('login', [AuthController::class, 'loginAction']);
 $routes->get('register', [AuthController::class, 'registerView']);
 $routes->post('register', [AuthController::class, 'registerAction']);
