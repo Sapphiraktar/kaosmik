@@ -16,10 +16,10 @@ jobs:
       matrix:
         php-version: [ '8.2', '8.4' ]
 
-    # ── SERVICE MARIADB (même famille que le docker-compose du projet) ──
+    # SERVICE MARIADB
     services:
       mariadb:
-        image: mariadb:latest   # à épingler (poste local ET CI) une fois la version choisie
+        image: mariadb:latest
         env:
           MARIADB_ROOT_PASSWORD: root
           MARIADB_DATABASE: kaosmik_tests
@@ -36,7 +36,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2 Installer PHP (extensions requises par CodeIgniter 4 et le driver MySQLi)
+      # 2 Installer PHP
       - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
@@ -52,19 +52,19 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      # 4 Installer les dépendances (garder les dépendances de dev : Faker, PHPUnit)
+      # 4 Installer les dépendances
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
-      # 5 Chercher les vulnérabilités connues des dépendances
+      # 5 Chercher les vulnérabilités connues
       - name: Composer audit
         run: composer audit
 
-      # 6 Lancer les tests (la base de test est configurée dans phpunit.dist.xml)
+      # 6 Lancer les tests PHPUnit
       - name: Run PHPUnit
         run: vendor/bin/phpunit --no-coverage --colors=always
 
-      # 7 Conserver les rapports, même si les tests échouent
+      # 7 Conserver les rapports même si les tests échouent
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -72,7 +72,7 @@ jobs:
           name: phpunit-logs-php${{ matrix.php-version }}
           path: build/logs/
 
-      # (optionnel) Vérifier que les migrations passent sur une base vierge
+      # 8 Vérifier les migrations (facultatif)
       - name: Check migrations
         env:
           CI_ENVIRONMENT: development
@@ -83,3 +83,46 @@ jobs:
           database.default.DBDriver: MySQLi
           database.default.port: 3306
         run: php spark migrate --all
+
+  # Job séparé pour la couverture de code
+  coverage:
+    name: Couverture de code
+    runs-on: ubuntu-latest
+
+    services:
+      mariadb:
+        image: mariadb:latest
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: kaosmik_tests
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: intl, mbstring, mysqli
+          coverage: pcov
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run coverage
+        run: composer test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: build/coverage/
