@@ -85,10 +85,6 @@ jobs:
           database.default.port: 3306
         run: php spark migrate --all
 
-  coverage:
-    name: Couverture de code
-    runs-on: ubuntu-latest
-
     services:
       mariadb:
         image: mariadb:latest
@@ -119,4 +115,3 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: build/coverage/
