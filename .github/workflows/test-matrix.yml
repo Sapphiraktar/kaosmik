@@ -1,0 +1,20 @@
+
+name: Test Matrix
+
+on:
+  push:
+    branches: [ main, test ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-php-82:
+    uses: ./.github/workflows/reusable-tests.yml
+    with:
+      php-version: '8.2'
+
+  test-php-84:
+    uses: ./.github/workflows/reusable-tests.yml
+    with:
+      php-version: '8.4'

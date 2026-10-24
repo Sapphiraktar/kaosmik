@@ -1,0 +1,46 @@
+
+name: Reusable Tests
+
+on:
+  workflow_call:
+    inputs:
+      php-version:
+        required: true
+        type: string
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: kaosmik_tests
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php-version }}
+          extensions: intl, mbstring, mysqli
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Composer audit
+        run: composer audit
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit --no-coverage
