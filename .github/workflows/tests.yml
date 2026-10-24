@@ -65,7 +65,7 @@ jobs:
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit --no-coverage --colors=always
 
-      # 7 Conserver les rapports même si les tests échouent
+      # ETAPE 7 : CONSERVER LES RAPPORTS MEME SI LES TESTS ECHOUENT
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -73,7 +73,7 @@ jobs:
           name: phpunit-logs-php${{ matrix.php-version }}
           path: build/logs/
 
-      # 8 Vérifier les migrations (facultatif)
+      # ETAPE 8 : VERIFIER LES MIGRATIONS (FACULTATIF)
       - name: Check migrations
         env:
           CI_ENVIRONMENT: development
@@ -85,5 +85,38 @@ jobs:
           database.default.port: 3306
         run: php spark migrate --all
 
+  coverage:
+    name: Couverture de code
+    runs-on: ubuntu-latest
 
+    services:
+      mariadb:
+        image: mariadb:latest
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: kaosmik_tests
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: intl, mbstring, mysqli
+          coverage: pcov
+
+      - run: composer install --prefer-dist --no-progress --no-interaction
+
+      - run: composer test:coverage
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: build/coverage/
