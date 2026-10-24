@@ -1,4 +1,4 @@
-name: Tests Kaosmik
+name: Tests KaosmiK
 
 on:
   push:
@@ -17,10 +17,9 @@ jobs:
       matrix:
         php-version: [ '8.2', '8.4' ]
 
-    # SERVICE MARIADB
     services:
       mariadb:
-        image: mariadb:latest
+        image: mariadb:10.11
         env:
           MARIADB_ROOT_PASSWORD: root
           MARIADB_DATABASE: kaosmik_tests
@@ -33,11 +32,11 @@ jobs:
           --health-retries=10
 
     steps:
-      # 1 Télécharger le code
+      # ETAPE 1 : CHECKOUT CODE
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2 Installer PHP
+      # ETAPE 2 : CONFIGURER PHP
       - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
@@ -45,24 +44,25 @@ jobs:
           extensions: intl, mbstring, mysqli
           coverage: none
 
-      # 3 Cache des téléchargements Composer
-      - name: Cache Composer downloads
+      # ETAPE 3 : CACHE COMPOSER DEPENDENCIES
+      - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
           path: ~/.cache/composer
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
-      # 4 Installer les dépendances
-      - name: Install dependencies
+      # ETAPE 4 : INSTALLER DEPENDANCES
+      - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
-      # 5 Chercher les vulnérabilités connues
+      # ETAPE 5 : CHERCHER LES VULNERABILITES
       - name: Composer audit
         run: composer audit
 
-      # 6 Lancer les tests PHPUnit
-      - name: Run PHPUnit
+      # ETAPE 6 : EXECUTER LES TESTS SANS COUVERTURE
+      - name: Run PHPUnit tests
         run: vendor/bin/phpunit --no-coverage --colors=always
 
       # 7 Conserver les rapports même si les tests échouent
@@ -85,45 +85,5 @@ jobs:
           database.default.port: 3306
         run: php spark migrate --all
 
-  # Job séparé pour la couverture de code
-  coverage:
-    name: Couverture de code
-    runs-on: ubuntu-latest
 
-    services:
-      mariadb:
-        image: mariadb:latest
-        env:
-          MARIADB_ROOT_PASSWORD: root
-          MARIADB_DATABASE: kaosmik_tests
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="healthcheck.sh --connect --innodb_initialized"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup PHP 8.4
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          extensions: intl, mbstring, mysqli
-          coverage: pcov
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
-
-      - name: Run coverage
-        run: composer test:coverage
-
-      - name: Upload coverage report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: build/coverage/
