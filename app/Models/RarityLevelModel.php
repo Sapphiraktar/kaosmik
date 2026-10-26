@@ -34,15 +34,21 @@ class RarityLevelModel extends Model
     protected $cleanValidationRules = true;
 
     // Callbacks
+
     protected $allowCallbacks = true;
-    protected $beforeInsert   = ['convertAppearanceRate'];
-    protected $afterInsert    = ['calculateCommonAppearanceRate'];
-    protected $beforeUpdate   = ['convertAppearanceRate'];
-    protected $afterUpdate    = ['calculateCommonAppearanceRate'];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = ['protectDefaultRarity'];
-    protected $afterDelete    = ['calculateCommonAppearanceRate'];
+
+    protected $beforeInsert = ['convertAppearanceRate'];
+    protected $afterInsert  = ['calculateCommonAppearanceRate'];
+
+    protected $beforeUpdate = ['convertAppearanceRate', 'protectDefaultRarity'];
+    protected $afterUpdate  = ['calculateCommonAppearanceRate'];
+
+    protected $beforeFind   = [];
+    protected $afterFind    = [];
+
+    protected $beforeDelete = ['protectDefaultRarity'];
+    protected $afterDelete  = ['calculateCommonAppearanceRate'];
+
 
     protected function convertAppearanceRate(array $data) {
         if (isset($data['data']['appearance_rate'])) {

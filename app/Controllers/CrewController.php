@@ -45,7 +45,7 @@ class CrewController extends BaseController
             }
         }
         $this->error('Une erreur est survenue. Veuillez contacter un administrateur.');
-        return $this->redirect('/crew');
+        return $this->redirect('/equipage');
     }
 
     public function sellBulk()
