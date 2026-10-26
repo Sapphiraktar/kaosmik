@@ -11,16 +11,16 @@
                 <!-- Gestion des erreurs natives de Shield -->
                 <?php if (session('error') !== null) : ?>
                     <div class="alert alert-danger" role="alert">
-                        <?= session('error') ?>
+                        <?= esc(session('error')) ?>
                     </div>
                 <?php elseif (session('errors') !== null) : ?>
                     <div class="alert alert-danger" role="alert">
                         <?php if (is_array(session('errors'))) : ?>
                             <?php foreach (session('errors') as $error) : ?>
-                                <?= $error ?><br>
+                                <?= esc($error) ?><br>
                             <?php endforeach ?>
                         <?php else : ?>
-                            <?= session('errors') ?>
+                            <?= esc(session('errors')) ?>
                         <?php endif ?>
                     </div>
                 <?php endif ?>
@@ -33,7 +33,7 @@
                         <label for="email" class="form-label">Adresse email</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" class="form-control" name="email" id="email" inputmode="email" autocomplete="email" placeholder="votre@email.com" value="<?= old('email') ?>" required>
+                            <input type="email" class="form-control" name="email" id="email" inputmode="email" autocomplete="email" placeholder="votre@email.com" value="<?= esc(old('email')) ?>" required>
                         </div>
                     </div>
 
@@ -42,7 +42,7 @@
                         <label for="username" class="form-label">Nom d'utilisateur</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                            <input type="text" class="form-control" name="username" id="username" inputmode="text" autocomplete="username" placeholder="Pseudo" value="<?= old('username') ?>" required>
+                            <input type="text" class="form-control" name="username" id="username" inputmode="text" autocomplete="username" placeholder="Pseudo" value="<?= esc(old('username')) ?>" required>
                         </div>
                     </div>
 

@@ -15,7 +15,7 @@ $routes->post('register', [AuthController::class, 'registerAction']);
 $routes->get('logout', [AuthController::class, 'logoutAction']);
 
 //Routes pour l'utilisateur connecté
-$routes->group('', ['filter' => 'session'], function($routes) {
+$routes->group('', ['filter' => ['session', 'nocache']], function($routes) {
     //Routes pour la cantina
     $routes->group('cantina', function($routes) {
         $routes->get('/', 'CantinaController::index');
@@ -39,7 +39,13 @@ $routes->group('', ['filter' => 'session'], function($routes) {
     //Routes pour le profil
     $routes->group('mon-profil', function($routes) {
         $routes->get('mes-anciennes-missions', 'UserController::oldMissions');
-
+    });
+    //Routes pour le chat
+    $routes->group('chat', function($routes) {
+        $routes->get('/', 'ChatController::index');
+        $routes->get('new-messages', 'ChatController::newMessages');
+        $routes->get('(:any)', 'ChatController::conversation/$1');
+        $routes->post('send', 'ChatController::send');
     });
 });
 

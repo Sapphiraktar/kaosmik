@@ -58,8 +58,7 @@
         <?= form_open('cantina/recruit/' . $character->id); ?>
         <div class="d-grid">
             <button type="submit" class="btn btn-kaosmik"
-                    <?= ($character->cost_credit > auth()->user()->getPlayer()->credits) || (auth()->user()->getPlayer()->isFleetFull()) ? 'disabled' : ''; ?>
-            >
+                    <?= ($character->cost_credit > auth()->user()->getPlayer()->credits) || (auth()->user()->getPlayer()->isFleetFull()) ? 'disabled' : ''; ?>>
                 Recruter ( <i class="fa-solid fa-cent-sign"></i><?= $character->cost_credit; ?> )
             </button>
         </div>

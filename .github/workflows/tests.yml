@@ -1,22 +1,21 @@
-
 name: Tests KaosmiK
 
 on:
   push:
-    branches: [ main, test ]
+    branches: [main, test]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   tests:
     name: PHPUnit (PHP ${{ matrix.php-version }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
       matrix:
-        php-version: [ '8.2', '8.4' ]
+        php-version: ['8.2', '8.4']
 
     services:
       mariadb:
@@ -33,11 +32,9 @@ jobs:
           --health-retries=10
 
     steps:
-      # ETAPE 1 : CHECKOUT CODE
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ETAPE 2 : CONFIGURER PHP
       - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
@@ -45,7 +42,6 @@ jobs:
           extensions: intl, mbstring, mysqli
           coverage: none
 
-      # ETAPE 3 : CACHE COMPOSER DEPENDENCIES
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
@@ -54,27 +50,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      # ETAPE 4 : INSTALLER DEPENDANCES
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
-      # ETAPE 5 : CHERCHER LES VULNERABILITES
       - name: Composer audit
         run: composer audit
 
-      # ETAPE 6 : EXECUTER LES TESTS SANS COUVERTURE
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit --no-coverage --colors=always
 
-      # ETAPE 7 : CONSERVER LES RAPPORTS MEME SI LES TESTS ECHOUENT
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: phpunit-logs-php${{ matrix.php-version }}
           path: build/logs/
+          if-no-files-found: ignore
 
-      # ETAPE 8 : VERIFIER LES MIGRATIONS (FACULTATIF)
       - name: Check migrations
         env:
           CI_ENVIRONMENT: development
