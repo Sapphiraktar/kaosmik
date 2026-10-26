@@ -18,11 +18,14 @@ final class RarityLevelModelTest extends CIUnitTestCase
     protected $seed      = 'Tests\Support\Database\Seeds\KaosmikTestSeeder';
 
     private RarityLevelModel $rarityModel;
+
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->rarityModel = new RarityLevelModel();
     }
+
     private function newRarity(array $overrides = []): array
     {
         return array_merge([
@@ -36,7 +39,7 @@ final class RarityLevelModelTest extends CIUnitTestCase
     public function testGetRandomRarityReturnsARarity()
     {
         $rarity = $this->rarityModel->getRandomRarity();
+
         $this->assertInstanceOf(RarityLevel::class, $rarity);
     }
 }
-

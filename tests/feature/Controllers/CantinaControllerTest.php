@@ -58,5 +58,4 @@ final class CantinaControllerTest extends CIUnitTestCase
         $this->seeInDatabase('heroes', ['player_id' => $player->id, 'name' => $offer->name]);
         $this->seeInDatabase('players', ['id' => $player->id, 'credits' => 1000 - $offer->cost_credit]);
     }
-
 }
